@@ -1,71 +1,72 @@
 // Erika Hamilton
 // Lab 6 Part 2
-// ----------------------------------------------- Variables
-console.clear();
-var userEmail;
-var name;
-var age;
-var userEmail = document.getElementById("email");
-var name = document.getElementById("name");
-var age = document.getElementById("age");
-name.onKeydown = checkName(name);
-age.onKeydown = checkAge(age);
-email.onKeydown = checkEmail(userEmail);
+// ----------------------------------------------- Current Issues
+// Red background won't change back once an invalid character is erased
+
+document.getElementById("email").addEventListener("keypress", checkEmail);
+document.getElementById("name").addEventListener("keypress", checkName);
+document.getElementById("age").addEventListener("keypress", checkAge);
 
 // ----------------------------------------------- Check Email
-function checkEmail(userEmail) {
-  var emailTrue;
+function checkEmail() {
+  console.log("Checking email...");
   var regExp = new RegExp('[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?');
-    if(regExp.test(email.value)) {
+  var userEmail = document.getElementById("email").value;
+  var userEmailBool = regExp.test(userEmail);
+    if(userEmailBool == false) {
       document.getElementById("email").style.backgroundColor = "red";
       alert("Please check the email again.");
     }
     else {
-      emailTrue = validate(regExp.test(email));
+      document.getElementById("email").style.backgroundColor = "";
+      console.log(userEmail);
+      validate();
     }
-  return emailTrue;
+    return userEmail;
 }
 // ----------------------------------------------- Check Name
-function checkName(name) {
+function checkName() {
+  console.log("Checking name...");
   var regEx = new RegExp('<');
-  if(regEx.test(name.value))
-  {
+  var userName = document.getElementById("name").value;
+  if(regEx.test(userName)){
+    //if the regEx.test tests true, it will recognize invalid
+    //characters, turning the background red.
     document.getElementById("name").style.backgroundColor = "red";
-    alert("An invalid character has been put in.");
+    //no hackers on my forms!
+    alert("An invalid character has been put in. Please don't try hacking me.");
     }
   else {
-      return name;
+    //keeps the background color the same
+      document.getElementById("email").style.backgroundColor = "white";
     }
   }
 
-// ----------------------------------------------- CheckAge
-function checkAge(age) {
+// ----------------------------------------------------------- CheckAge
+function checkAge() {
+  console.log("Checking age...");
     var regEx = new RegExp('^(([0-9][1-9])|([1-9][0-9])|[1-9])$|');
-  //onkeyPress listener, turn red when . or when age>3digits until it is removed
-    if(regEx.test(age.value) && (age > 100))
+    var userAge = document.getElementById('age').value;
+    if(regEx.test(userAge))
+    //if the test is true, it will recognize the invalid age
       {
       document.getElementById("age").style.backgroundColor = "red";
-      alert("Please check your age again.");
+      alert("Please check your age again. If it's correct, you're too old or too young.");
       }
      else {
-       return age;
+       //keeps the background the same
+       document.getElementById("age").style.backgroundColor = "";
     }
   }
 
 // ----------------------------------------------- Validate
-function validate(emailTrue) {
-  if(emailTrue == True)
-  {
-    subs = myAjaxFunction(userEmail);
-  }
-  else {
-    alert("Please make sure your information is correct.");
-  }
+function validate(userEmail) {
+  console.log("Checking validation...");
+  myAjaxFunction();
 }
-
 // ----------------------------------------------- myAjaxFunction
-function myAjaxFunction(userEmail) {
-  alert("AJAX has been made.");
-  document.getElementById("form").reset(); //clears all input
+function myAjaxFunction() {
+  console.log("Checking ajax...");
+  alert("AJAX call has been made!");
 
 }
